@@ -41,7 +41,8 @@ const style = `
     页面的样式结构
 */
 body {
-    background: #CCFF99;
+   
+    background-image: linear-gradient(to right,#FFFFCC,#FFCCCC);
 }
 
 .container {
@@ -63,74 +64,88 @@ body {
     font-size: 16px;
 }
 
+/* 
+    现在开始简历里的内容
+*/
 .content {
     width: 68%;
     background: #fff;
+    padding: 10px 20px;
 }
 
 `
 
 
 
+class resumeComponent {
 
 
+    constructor(){
+        // 播放的速度
+        this.delay = 20;
+    }
 
 
-const promise = (data) => {
-    return new Promise((resolve, reject) => {
-        if (data) {
-            resolve();
-        } else {
-            reject();
-        }
-    })
+    // 生成简历
+    async generate() {
+        let aa = await this.startStyle();
+        console.log(aa)
+        let bb = await this.startResume();
+
+        console.log(bb)
+    }
+
+
+    startStyle() {
+
+        let _this = this;
+        return new Promise((resolve) => {
+            let index = 0;
+            let timer = setInterval(() => {
+                if (index < style.length) {
+                    index++;
+                    $("#style").html(style.substr(0, index));
+                    $("#code").html(style.substr(0, index));
+                } else {
+                    clearInterval(timer);
+                    resolve("页面初始样式完成")
+                }
+            }, this.delay)
+        })
+
+    }
+
+    startResume() {
+        return new Promise((resolve) => {
+            let index = 0;
+            let timer = setInterval(() => {
+                if (index < resume.length) {
+                    index++; 
+                    $("#resumeContent").html(resume.substr(0, index));
+                } else {
+                    clearInterval(timer);
+                    resolve("简历内容完成")
+                }
+            }, this.delay)
+        })
+
+    }
+
+
 }
 
+// 调用
+new resumeComponent().generate();
 
-
-promise(true)
-    .then(() => {
-
-        let index = 0;
-        const timer = setInterval(() => {
-            index++;
-            $("#style").html(style.substr(0, index));
-            $("#code").html(style.substr(0, index));
-
-        }, 30)
-
-    })
-    .then(() => {
-        console.log("xxx");
-        let index = 0;
-        const timer = setInterval(() => {
-            index++;
-           $("#content").html(resume.substr(0,index));
-        }, 30)
-
-    })
-    .catch(() => {
-        console.log("请求失败")
-    })
 
 
 // 创建一个promise对象，当ajax函数请求完成之后，再success函数中调用promise
 
 
-const startWrite = () => {
-    // 接收到数据开始执行此函数
-    // 使用递归调用来判断是否全部输出完
+// const startWrite = () => {
+//     // 接收到数据开始执行此函数
+//     // 使用递归调用来判断是否全部输出完
 
-}
-
-
-
-
-    // $("#content").html(resume.substr(0,index));
-
-
-
-
-// $("#content").load("./markdown/resume.md");
+// }
 
 
