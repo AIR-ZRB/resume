@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <script type="text/javascript" src="./lib/jquery.js"></script>
-    <script type="text/javascript" src="./main.js"></script>
-    <link rel="stylesheet" href="./css/base.css" type="text/css">
-    <style id="style">
 
-       
+    <link rel="stylesheet" type="text/css" href="./lib/prismjs/themes/prism.css">
+
+    <link rel="stylesheet" type="text/css" href="./css/base.css">
+
+
+    <script type="text/javascript" src="./lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="./lib/prismjs/prism.js"></script>
+    <script type="text/javascript" src="./lib/marked/lib/marked.js"></script>
+    <script type="text/javascript" src="./main.js"></script>
+
+
+    <style id="style">
     </style>
 </head>
+
 <body>
-    
+
 
     <div class="container">
 
-        <div class="code">
-            <pre  id="code">
+        <div class="styleContainer">
+            <pre id="stylePre" class="stylePre language-css">
+                <code id="styleCode" class="styleCode language-css"> 
 
+                </code>
             </pre>
         </div>
 
@@ -30,6 +41,8 @@
 
     </div>
 
+
   
 </body>
+
 </html>

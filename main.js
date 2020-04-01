@@ -1,4 +1,8 @@
 const resume = `
+
+<h1>KB</h1>
+<div>123213213</div>
+
 ## 专业技能
 
 + 熟悉HTML和HTML5，理解语义化灵活使用常见标签
@@ -40,9 +44,12 @@ const style = `
 /* 
     页面的样式结构
 */
+
+* {
+     transition: all .3s;
+}
 body {
-   
-    background-image: linear-gradient(to right,#FFFFCC,#FFCCCC);
+    background-image: linear-gradient(#FFFFCC,#FFCCCC);
 }
 
 .container {
@@ -55,24 +62,67 @@ body {
 
 }
 
-.code {
-    width: 30%;
-    padding: 10px;
-    background: #66CCCC;
-    border-radius: 10px;
+.styleContainer {
+    width: 36%;
+    height: 100%;
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
 }
 
+
+.styleContainer .stylePre {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 10px;
+    overflow-y: scroll;
+    margin-top: 0;
+    word-break:break-all;
+    word-wrap:break-word;
+    white-space:pre-wrap;
+
+}
 /* 
     现在开始简历里的内容
 */
 .content {
-    width: 68%;
+    width: 63%;
+    height: 100%;
     background: #fff;
+    overflow-y: scroll;
     padding: 10px 20px;
+    
+
 }
 
+/* 
+    开始简历样式优化
+*/
+#resumeContent {
+    white-space:pre-wrap
+}
+
+#resumeContent * {
+    margin: 0;
+  
+}
+
+
+#resumeContent h2 {
+    padding: 5px 0;
+    border-bottom: 1px dotted #000;
+}
+
+#resumeContent ul {
+    font-size: 0;
+    margin: 0;
+}
+
+#resumeContent li {
+    line-height: 24px;
+    font-size: 16px;
+    margin: 0;
+}
 `
 
 
@@ -80,32 +130,34 @@ body {
 class resumeComponent {
 
 
-    constructor(){
+    constructor() {
         // 播放的速度
-        this.delay = 20;
+        this.delay = 0;
     }
 
 
     // 生成简历
     async generate() {
         let aa = await this.startStyle();
-        console.log(aa)
         let bb = await this.startResume();
 
-        console.log(bb)
+
+        let cc = await this.changeMarkdown();
+        console.log(aa, bb, cc)
     }
 
 
     startStyle() {
-
-        let _this = this;
         return new Promise((resolve) => {
             let index = 0;
             let timer = setInterval(() => {
                 if (index < style.length) {
                     index++;
                     $("#style").html(style.substr(0, index));
-                    $("#code").html(style.substr(0, index));
+                    $("#styleCode").html(Prism.highlight(style.substr(0, index), Prism.languages.css));
+
+                    $("#stylePre").scrollTop(1000000);
+
                 } else {
                     clearInterval(timer);
                     resolve("页面初始样式完成")
@@ -120,7 +172,7 @@ class resumeComponent {
             let index = 0;
             let timer = setInterval(() => {
                 if (index < resume.length) {
-                    index++; 
+                    index++;
                     $("#resumeContent").html(resume.substr(0, index));
                 } else {
                     clearInterval(timer);
@@ -131,6 +183,17 @@ class resumeComponent {
 
     }
 
+
+    changeMarkdown() {
+
+
+        return new Promise((resolve, reject) => {
+            let resumeHtml = $("#resumeContent").html();
+            $("#resumeContent").html(marked(resumeHtml));
+
+            resolve("将markdown转换成HTML")
+        })
+    }
 
 }
 
@@ -147,5 +210,3 @@ new resumeComponent().generate();
 //     // 使用递归调用来判断是否全部输出完
 
 // }
-
-
